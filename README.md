@@ -23,3 +23,6 @@ This website provides a user-friendly interface for compressing text files into 
 
 ### Contact:
   - For questions, issues, or suggestions, please open an issue on GitHub.
+
+### Demonstration:
+https://github.com/Kazuto16K/Huffman-Compressor-Decompressor/assets/112095521/d6b330a1-a6ff-43ab-84f8-727d37d73b19
