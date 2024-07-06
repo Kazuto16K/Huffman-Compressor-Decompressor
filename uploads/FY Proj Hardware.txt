@@ -1,0 +1,29 @@
+UART Communication
+Windows to GSM Module Code (eg : Sim 900) Data Sending
+USB to UART
+
+https://www.youtube.com/watch?v=RGCgLPMA8m4
+https://www.youtube.com/watch?v=aRE2Zge1rUI
+
+Chat GPT link :
+https://chatgpt.com/c/f5e96bde-6ac7-4c7f-b780-f03ea9bdc4a9
+
+def destination_airport_search(request):
+    if request.is_ajax():
+        try:
+            data = amadeus.reference_data.locations.get(
+                keyword=request.GET.get("term", None), subType=Location.ANY
+            ).data
+        except (ResponseError, KeyError, AttributeError) as error:
+            messages.add_message(
+                request, messages.ERROR, error.response.result["errors"][0]["detail"]
+            )
+    return HttpResponse(get_city_airport_list(data), "application/json")
+
+
+def get_city_airport_list(data):
+    result = []
+    for i, val in enumerate(data):
+        result.append(data[i]["iataCode"] + ", " + data[i]["name"])
+    result = list(dict.fromkeys(result))
+    return json.dumps(result)
