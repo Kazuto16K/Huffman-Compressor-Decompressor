@@ -18,13 +18,11 @@ class Node:
 
 class HuffmanCompressor:
     def __init__(self,data):
-        #self.source_path = source_path
         self.dest_path = ''
         self.freqeuency_dict = {}
         self.encoding_dict = {}
         self.encoded_text = ''
         self.padded_text = ''
-        self.decoding_dict = {}
         self.data = data
 
     def __generate_freq_dict(self,text):
@@ -67,17 +65,6 @@ class HuffmanCompressor:
 
         return bytes(byte_values)
     
-    def __write_to_file(self,byte_data):
-        file_name = os.path.splitext(self.source_path)[0]
-        file_name += '_compressed.bin'
-        file_path = os.path.join(current_directory,file_name)
-        self.dest_path = file_path
-        try:
-            with open(self.dest_path, 'wb') as file:
-                file.write(byte_data)
-            print("Binary Data successfully written to file path")
-        except Exception as e:
-            print(f"Error in writing to file: {e}")
 
     def compression(self):
         text = self.data
@@ -104,9 +91,6 @@ class HuffmanCompressor:
             self.__generate_encoding_dict(min_heap[0])
             self.__encode_text(text)
 
-            #str_encoding_dict = str(self.encoding_dict)
-        
-            ## padding
             self.__generate_padded_text()
             byte_data = self.__generate_byte_data()
             meta_data = str(self.encoding_dict)
