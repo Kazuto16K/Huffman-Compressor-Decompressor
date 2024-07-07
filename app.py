@@ -8,10 +8,12 @@ app.secret_key = 'hnjxnsjnanmxklnmaxomamlkxa'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['COMPRESSED_FOLDER'] = 'compressed'
 app.config['DECOMPRESSED_FOLDER'] = 'decompressed'
+app.config['UPLOADS_BIN_FOLDER'] = 'uploads_bin'
 
 os.makedirs(app.config['UPLOAD_FOLDER'],exist_ok=True)
 os.makedirs(app.config['COMPRESSED_FOLDER'],exist_ok=True)
 os.makedirs(app.config['DECOMPRESSED_FOLDER'],exist_ok=True)
+os.makedirs(app.config['UPLOADS_BIN_FOLDER'],exist_ok=True)
 
 
 @app.route('/')
@@ -76,11 +78,12 @@ def decompress_file():
         return redirect(request.url)
     
     if file and file.filename.endswith('.bin'):
-        filepath = os.path.join(app.config['COMPRESSED_FOLDER'],file.filename)
-        if os.path.exists(filepath):
+        filepath = os.path.join(app.config['UPLOADS_BIN_FOLDER'],file.filename)
+        file.save(filepath)
+        try:
             decompressed_filepath = decompress_file_function(filepath)
-        else:
-            return 'File doesnt exist in directory'
+        except:
+            return '<h1>This file is not encoded by this website</h1> '
         
         file_size = os.path.getsize(decompressed_filepath)
         file_size = file_size / 1024.0
